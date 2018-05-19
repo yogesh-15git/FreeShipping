@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Yogesh_FreeShipping::freeship"
+             title="Yogesh"
+             module="Yogesh_FreeShipping"
+             sortOrder="100"
+             resource="Yogesh_FreeShipping::freeship"/>
+
+        <add id="Yogesh_FreeShipping::freeshipping"
+             title="Free Shipping"
+             module="Yogesh_FreeShipping"
+             sortOrder="0"
+             action="freeship/index/index"
+             parent="Yogesh_FreeShipping::freeship"
+             resource="Yogesh_FreeShipping::freeshipping"/>
+
+    </menu>
+</config>

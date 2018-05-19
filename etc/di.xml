@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Yogesh\FreeShipping\Api\Data\FreeShippingSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Yogesh\FreeShipping\Api\Data\FreeShippingInterface" type="Yogesh\FreeShipping\Model\FreeShipping"/>
+    <preference for="Yogesh\FreeShipping\Api\FreeShippingRepositoryInterface" type="Yogesh\FreeShipping\Model\FreeShippingRepository"/>
+
+    <type name="Yogesh\FreeShipping\Model\ResourceModel\FreeShipping\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">yogesh_freeshipping</argument>
+            <argument name="eventPrefix" xsi:type="string">yogesh_freeshipping_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">freeshipping_grid_records_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Yogesh\FreeShipping\Model\ResourceModel\FreeShipping</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="freeship_index_grid_data_source" xsi:type="string">Yogesh\FreeShipping\Model\ResourceModel\FreeShipping\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\OfflineShipping\Model\Carrier\Freeshipping">
+        <plugin name="free-shipping-conditions" type="Yogesh\FreeShipping\Plugin\EnableFreeShipping" sortOrder="1" disabled="false" />
+    </type>
+</config>
