@@ -19,6 +19,8 @@ use \Magento\Framework\DB\Adapter\AdapterInterface;
  */
 class Collection extends FreeShippingCollection implements SearchResultInterface
 {
+    protected $authSession;
+
     /**
      * Resource initialization
      * @param EntityFactoryInterface $entityFactory ,
@@ -38,6 +40,7 @@ class Collection extends FreeShippingCollection implements SearchResultInterface
         LoggerInterface $logger,
         FetchStrategyInterface $fetchStrategy,
         ManagerInterface $eventManager,
+        \Magento\Backend\Model\Auth\Session $authSession,
         $mainTable,
         $eventPrefix,
         $eventObject,
@@ -55,6 +58,7 @@ class Collection extends FreeShippingCollection implements SearchResultInterface
             $connection,
             $resource
         );
+        $this->authSession = $authSession;
         $this->_eventPrefix = $eventPrefix;
         $this->_eventObject = $eventObject;
         $this->_init($model, $resourceModel);
@@ -138,5 +142,20 @@ class Collection extends FreeShippingCollection implements SearchResultInterface
     public function setItems(array $items = null)
     {
         return $this;
+    }
+
+    /**
+     * This is the function that will add the filter
+     */
+    protected function _beforeLoad()
+    {
+        parent::_beforeLoad();
+        $this->addFieldToFilter('city_name',['like' => $this->getCurrentAdminUserCity()]);
+        return $this;
+    }
+
+    public function getCurrentAdminUserCity()
+    {
+        return $this->authSession->getUser()->getCity(); // replace getCity() to you column
     }
 }
